@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор опросов | MVP</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="app-header">
+        <div class="container">
+            <h1>Генератор персонализированных опросов</h1>
+            <p class="subtitle">Анализ клиентского пути и автоматическое формирование вопросов</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="card input-section">
+            <h2>Ввод данных</h2>
+            <div class="form-group">
+                <label for="journey">Путь клиента (текст или JSON)</label>
+                <textarea id="journey" placeholder="Опишите шаги клиента или вставьте JSON..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="hint">Подсказка для модели (опционально)</label>
+                <input type="text" id="hint" placeholder="Например: акцент на удобство навигации">
+            </div>
+            <button id="generateBtn" onclick="generateSurvey()" class="btn btn-primary">Сгенерировать опрос</button>
+        </section>
+
+        <div id="error" class="alert alert-error"></div>
+        <div id="loading" class="loading-indicator">Генерация запроса к модели...</div>
+
+        <section id="result" class="card result-section">
+            <h2>Результат генерации</h2>
+            <div class="meta-badges">
+                <span class="badge"><strong>Категория:</strong> <span id="resCategory">—</span></span>
+                <span class="badge"><strong>Релевантность:</strong> <span id="resRelevance">—</span></span>
+            </div>
+
+            <div class="table-container">
+                <h3>Список вопросов</h3>
+                <table id="questionsTable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Вопрос</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <div class="debug-section">
+                <h3>Использованный промпт (для отладки)</h3>
+                <pre id="promptPreview" class="code-block"></pre>
+            </div>
+
+            <div class="editor-section">
+                <h3>Редактирование результата (JSON)</h3>
+                <textarea id="jsonEditor" class="code-editor"></textarea>
+                <div class="action-buttons">
+                    <button onclick="applyEdit()" class="btn btn-secondary">Применить правки</button>
+                    <button onclick="exportJSON()" class="btn btn-success">Экспорт JSON</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="card history-section">
+            <div class="section-header">
+                <h2>История генераций</h2>
+                <button onclick="loadHistory()" class="btn btn-outline">Обновить список</button>
+            </div>
+            <div id="historyList" class="history-list">
+                <p class="empty-state">История пуста. Сгенерируйте первый опрос.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <div class="container">
+            <p>OOO "let's play helldivers" &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
